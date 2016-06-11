@@ -2,9 +2,13 @@
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 window.addEventListener('touchstart', function() {
 
-	// create new buffer source for playback with an already
-	// loaded and decoded empty sound file
-	
+	// create empty buffer
+	var buffer = audioCtx.createBuffer(1, 1, 22050);
+	var source = audioCtx.createBufferSource();
+	source.buffer = buffer;
+
+	// connect to output (your speakers)
+	source.connect(audioCtx.destination);
 
 	// play the file
 	source.noteOn(0);
