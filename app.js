@@ -1,6 +1,19 @@
 // create web audio api context
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+window.addEventListener('touchstart', function() {
 
+	// create empty buffer
+	var buffer = audioCtx.createBuffer(1, 1, 22050);
+	var source = audioCtx.createBufferSource();
+	source.buffer = buffer;
+
+	// connect to output (your speakers)
+	source.connect(audioCtx.destination);
+
+	// play the file
+	source.noteOn(0);
+
+}, false);
 // create Oscillator and gain node
 var oscillator = audioCtx.createOscillator();
 var osc2 = audioCtx.createOscillator();
@@ -43,7 +56,6 @@ oscillator.onended = function() {
 gainNode.gain.value = initialVol;
 gain2.gain.value = initialVol;
 // Mouse pointer coordinates
-
 var curX;
 var curY;
 var curZ;
@@ -61,46 +73,23 @@ function updatePage(event) {
     console.log(event);
     oscillator.frequency.value = (Math.round(10*((curX+180) / 360))/10)* maxFreq;
     osc2.frequency.value = (Math.round(10*((curZ+180) / 360))/10)* maxFreq/3;
-    gainNode.gain.value = ((curY + 90) / 180) * maxVol;
+    gainNode.gain.value = Math.pow(2,((curY + 90) / 180))/2 * maxVol;
     gain2.gain.value = ((curY + 90) / 180) * maxVol;
     console.log(gainNode.gain.value);
-    //canvasDraw();
+    canvasDraw();
 }
 
 
-// canvas visualization
-/*
-function random(number1,number2) {
-  var randomNo = number1 + (Math.floor(Math.random() * (number2 - number1)) + 1);
-  return randomNo;
-}
-
-var canvas = document.querySelector('.canvas');
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
-
-var canvasCtx = canvas.getContext('2d');
+//canvas visualization
 
 function canvasDraw() {
-  if(KeyFlag == true) {
-    rX = KeyX;
-    rY = KeyY;
-  } else {
-    rX = CurX;
-    rY = CurY;
-  }
-  rC = Math.floor((gainNode.gain.value/maxVol)*30);
-
-  canvasCtx.globalAlpha = 0.2;
-
-  for(i=1;i<=15;i=i+2) {
-    canvasCtx.beginPath();
-    canvasCtx.fillStyle = 'rgb(' + 100+(i*10) + ',' + Math.floor((gainNode.gain.value/maxVol)*255) + ',' + Math.floor((oscillator.frequency.value/maxFreq)*255) + ')';
-    canvasCtx.arc(rX+random(0,50),rY+random(0,50),rC/2+i,(Math.PI/180)*0,(Math.PI/180)*360,false);
-    canvasCtx.fill();
-    canvasCtx.closePath();
-  }
+    var red = Math.floor((curX + 180) % 255);
+    var green = Math.floor((curZ + 180) % 255);
+    var blue = Math.floor((curY + 90) % 255);
+    var rgb = "rgb("+red+","+green+","+blue+")";
+    document.body.style.backgroundColor = rgb;
+    console.log(rgb);
 }
-*/
+
 
 window.addEventListener('deviceorientation', updatePage);
