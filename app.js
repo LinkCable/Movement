@@ -51,9 +51,10 @@ function updatePage(event) {
     curZ = event.alpha;
 
     console.log(event);
-    oscillator.frequency.value = (curX/WIDTH) * maxFreq;
-    gainNode.gain.value = (curY/HEIGHT) * maxVol;
+    oscillator.frequency.value = ((curX+180) / 360) * maxFreq;
+    gainNode.gain.value = ((curY + 90) / 180) * maxVol;
 
+    console.log(gainNode.gain.value);
     //canvasDraw();
 }
 
