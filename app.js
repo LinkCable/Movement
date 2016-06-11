@@ -81,24 +81,12 @@ function updatePage(event) {
 
 
 //canvas visualization
-function random(number1,number2) {
-  var randomNo = number1 + (Math.floor(Math.random() * (number2 - number1)) + 1);
-  return randomNo;
-}
-
-var canvas = document.querySelector('.canvas');
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
-
-var canvasCtx = canvas.getContext('2d');
 
 function canvasDraw() {
     var red = Math.floor((curX + 180) % 255);
     var green = Math.floor((curZ + 180) % 255);
     var blue = Math.floor((curY + 90) % 255);
     var rgb = "rgb("+red+","+green+","+blue+")";
-    canvasCtx.fillStyle = rgb;
-    canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
     document.body.style.backgroundColor = rgb;
     console.log(rgb);
 }
