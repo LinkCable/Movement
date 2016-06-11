@@ -1,6 +1,15 @@
 // create web audio api context
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+window.addEventListener('touchstart', function() {
 
+	// create new buffer source for playback with an already
+	// loaded and decoded empty sound file
+	
+
+	// play the file
+	source.noteOn(0);
+
+}, false);
 // create Oscillator and gain node
 var oscillator = audioCtx.createOscillator();
 var osc2 = audioCtx.createOscillator();
