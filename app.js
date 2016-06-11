@@ -35,7 +35,6 @@ oscillator.onended = function() {
 gainNode.gain.value = initialVol;
 
 // Mouse pointer coordinates
-
 var curX;
 var curY;
 var curZ;
@@ -51,16 +50,15 @@ function updatePage(event) {
     curZ = event.alpha;
 
     console.log(event);
-    oscillator.frequency.value = ((curX+180) / 360) * maxFreq;
+    oscillator.frequency.value = ((curX + 180) / 360) * maxFreq;
     gainNode.gain.value = ((curY + 90) / 180) * maxVol;
 
     console.log(gainNode.gain.value);
-    //canvasDraw();
+    canvasDraw();
 }
 
 
-// canvas visualization
-/*
+//canvas visualization
 function random(number1,number2) {
   var randomNo = number1 + (Math.floor(Math.random() * (number2 - number1)) + 1);
   return randomNo;
@@ -73,25 +71,14 @@ canvas.height = HEIGHT;
 var canvasCtx = canvas.getContext('2d');
 
 function canvasDraw() {
-  if(KeyFlag == true) {
-    rX = KeyX;
-    rY = KeyY;
-  } else {
-    rX = CurX;
-    rY = CurY;
-  }
-  rC = Math.floor((gainNode.gain.value/maxVol)*30);
-
-  canvasCtx.globalAlpha = 0.2;
-
-  for(i=1;i<=15;i=i+2) {
-    canvasCtx.beginPath();
-    canvasCtx.fillStyle = 'rgb(' + 100+(i*10) + ',' + Math.floor((gainNode.gain.value/maxVol)*255) + ',' + Math.floor((oscillator.frequency.value/maxFreq)*255) + ')';
-    canvasCtx.arc(rX+random(0,50),rY+random(0,50),rC/2+i,(Math.PI/180)*0,(Math.PI/180)*360,false);
-    canvasCtx.fill();
-    canvasCtx.closePath();
-  }
+    var red = Math.floor((curX + 180) % 255);
+    var green = Math.floor((curZ + 180) % 255);
+    var blue = Math.floor((curY + 90) % 255);
+    var rgb = "rgb("+red+","+green+","+blue+")";
+    canvasCtx.fillStyle = rgb;
+    canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
+    console.log(rgb);
 }
-*/
+
 
 window.addEventListener('deviceorientation', updatePage);
