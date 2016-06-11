@@ -77,6 +77,7 @@ function canvasDraw() {
     var rgb = "rgb("+red+","+green+","+blue+")";
     canvasCtx.fillStyle = rgb;
     canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
+    document.body.style.backgroundColor = rgb;
     console.log(rgb);
 }
 

@@ -1,0 +1,12 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    top: 45%;
+    text-align: center;
+    width: 100%;
+}
