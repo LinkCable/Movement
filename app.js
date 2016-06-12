@@ -1,3 +1,6 @@
+var isActive;
+
+
 // create web audio api context
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 window.addEventListener('touchstart', function() {
@@ -14,6 +17,7 @@ window.addEventListener('touchstart', function() {
 	source.noteOn(0);
 
 }, false);
+
 // create Oscillator and gain node
 var oscillator = audioCtx.createOscillator();
 var osc2 = audioCtx.createOscillator();
@@ -81,7 +85,6 @@ function updatePage(event) {
 
 
 //canvas visualization
-
 function canvasDraw() {
     var red = Math.floor((curX + 180) % 255);
     var green = Math.floor((curZ + 180) % 255);
@@ -91,5 +94,16 @@ function canvasDraw() {
     console.log(rgb);
 }
 
+window.onfocus = function () {
+    gainNode.connect(audioCtx.destination);
+    gain2.connet(audioCtx.destination);
+    console.log("navigated back")
+};
+
+window.onblur = function () {
+    gainNode.disconnect(audioCtx.destination);
+    gain2.disconnect(audioCtx.destination);
+    console.log("left")
+};
 
 window.addEventListener('deviceorientation', updatePage);
